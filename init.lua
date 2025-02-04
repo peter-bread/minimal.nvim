@@ -1,6 +1,16 @@
 ---@diagnostic disable: undefined-doc-name
 
-vim.hl = vim.highlight
+-------------------- this can be removed if you have v0.10.4 -------------------------
+
+-- see https://github.com/neovim/neovim/issues/31675
+
+local version = vim.version()
+
+if version.major == 0 and version.minor == 10 and version.patch == 3 then
+	vim.hl = vim.highlight
+end
+
+--------------------------------------------------------------------------------------
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
