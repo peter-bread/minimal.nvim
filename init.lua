@@ -252,6 +252,13 @@ require("lazy").setup({
 	checker = { enabled = true },
 })
 
+-- other useful plugins:
+--
+-- echasnovski/mini.ai
+-- echasnovski/mini.surround
+--
+-- honestly just have a look in mini.nvim or snacks.nvim, usually a good starting point
+
 local set = vim.keymap.set
 
 set("n", "<leader>l", "<cmd>Lazy<cr>", { desc = "Lazy" })
