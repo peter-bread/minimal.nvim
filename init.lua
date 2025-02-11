@@ -256,3 +256,12 @@ local set = vim.keymap.set
 
 set("n", "<leader>l", "<cmd>Lazy<cr>", { desc = "Lazy" })
 set("n", "<leader>m", "<cmd>Mason<cr>", { desc = "Mason" })
+
+-- autocmds
+
+vim.api.nvim_create_autocmd("TextYankPost", {
+	group = vim.api.nvim_create_augroup("UserHighlightYank", { clear = true }),
+	callback = function()
+		vim.highlight.on_yank()
+	end,
+})
