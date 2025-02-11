@@ -259,6 +259,8 @@ require("lazy").setup({
 --
 -- honestly just have a look in mini.nvim or snacks.nvim, usually a good starting point
 
+-- keymaps
+
 local set = vim.keymap.set
 
 set("n", "<leader>l", "<cmd>Lazy<cr>", { desc = "Lazy" })
