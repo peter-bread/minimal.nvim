@@ -78,17 +78,6 @@ require("lazy").setup({
 			end,
 		},
 
-		-- updates LuaLS workspace libraries to include Neovim files
-		{
-			"folke/lazydev.nvim",
-			ft = "lua",
-			opts = {
-				library = {
-					{ path = "${3rd}/luv/library", words = { "vim%.uv" } },
-				},
-			},
-		},
-
 		-- autocompletion
 		{
 			"saghen/blink.cmp",
@@ -112,23 +101,38 @@ require("lazy").setup({
 			},
 		},
 
+		-- note: you can nest plugin specs
 		{
-			"saghen/blink.cmp",
-			---Extend `opts` table
-			---`opts` can be a function that modifies an existing table
-			---@param opts blink.cmp.Config
-			opts = function(_, opts)
-				opts.sources.default = vim.list_extend({ "lazydev" }, opts.sources.default or {})
-
-				opts.sources.providers = vim.tbl_extend("force", opts.sources.providers or {}, {
-
-					lazydev = {
-						name = "LazyDev",
-						module = "lazydev.integrations.blink",
-						score_offset = 100,
+			-- updates LuaLS workspace libraries to include Neovim files
+			{
+				"folke/lazydev.nvim",
+				ft = "lua",
+				opts = {
+					library = {
+						{ path = "${3rd}/luv/library", words = { "vim%.uv" } },
 					},
-				})
-			end,
+				},
+			},
+
+			{
+				"saghen/blink.cmp",
+
+				---Extend `opts` table
+				---`opts` can be a function that modifies an existing table
+				---@param opts blink.cmp.Config
+				opts = function(_, opts)
+					---@diagnostic disable-next-line: param-type-mismatch
+					opts.sources.default = vim.list_extend({ "lazydev" }, opts.sources.default or {})
+
+					opts.sources.providers = vim.tbl_extend("force", opts.sources.providers or {}, {
+						lazydev = {
+							name = "LazyDev",
+							module = "lazydev.integrations.blink",
+							score_offset = 100,
+						},
+					})
+				end,
+			},
 		},
 
 		-- dev tool installer
