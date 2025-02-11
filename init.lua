@@ -189,6 +189,7 @@ require("lazy").setup({
 		-- formatting
 		{
 			"stevearc/conform.nvim",
+			event = { "BufWritePre" },
 			opts = {
 				formatters_by_ft = {
 					lua = { "stylua" },
