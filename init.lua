@@ -254,10 +254,11 @@ require("lazy").setup({
 
 -- other useful plugins:
 --
--- echasnovski/mini.ai
--- echasnovski/mini.surround
---
 -- honestly just have a look in mini.nvim or snacks.nvim, usually a good starting point
+--
+-- echasnovski/mini.ai > better text objects
+-- echasnovski/mini.surround > add, change, delete surroundings, e.g. speech marks, brackets etc
+-- folke/which-key.nvim > menu to show you available keymaps
 
 -- keymaps
 
