@@ -1,5 +1,3 @@
----@diagnostic disable: undefined-doc-name
-
 -------------------- this can be removed if you have v0.10.4 -------------------------
 
 -- see https://github.com/neovim/neovim/issues/31675
@@ -80,6 +78,17 @@ require("lazy").setup({
 			end,
 		},
 
+		-- updates LuaLS workspace libraries to include Neovim files
+		{
+			"folke/lazydev.nvim",
+			ft = "lua",
+			opts = {
+				library = {
+					{ path = "${3rd}/luv/library", words = { "vim%.uv" } },
+				},
+			},
+		},
+
 		-- autocompletion
 		{
 			"saghen/blink.cmp",
@@ -101,6 +110,25 @@ require("lazy").setup({
 					default = { "lsp", "path", "snippets", "buffer" },
 				},
 			},
+		},
+
+		{
+			"saghen/blink.cmp",
+			---Extend `opts` table
+			---`opts` can be a function that modifies an existing table
+			---@param opts blink.cmp.Config
+			opts = function(_, opts)
+				opts.sources.default = vim.list_extend({ "lazydev" }, opts.sources.default or {})
+
+				opts.sources.providers = vim.tbl_extend("force", opts.sources.providers or {}, {
+
+					lazydev = {
+						name = "LazyDev",
+						module = "lazydev.integrations.blink",
+						score_offset = 100,
+					},
+				})
+			end,
 		},
 
 		-- dev tool installer
@@ -173,6 +201,9 @@ require("lazy").setup({
 		},
 
 		-- fuzzy finder
+		-- alternatives:
+		--    folke/snacks.nvim (snacks.picker)
+		--    ibhagwan/fzf-lua
 		{
 			"nvim-telescope/telescope.nvim",
 			lazy = true,
@@ -201,6 +232,10 @@ require("lazy").setup({
 		},
 
 		-- autopairs
+		-- alternatives:
+		--    mini.pairs
+		--    | echasnovski/mini.nvim (main repo)
+		--    | echasnovski/mini.pairs (standalone)
 		{
 			"windwp/nvim-autopairs",
 			event = "InsertEnter",
