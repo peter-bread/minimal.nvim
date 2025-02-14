@@ -1,10 +1,21 @@
 # minimal.nvim
 
-This is a demo config to show that only a few plugins and a single file are
-needed to get quite an effective neovim setup.
+Simple, single-file neovim config.
 
-In total this took maybe 20 minutes to put together, at the end of the day
-most of it is copy-paste and change a few options.
+## Dependencies
 
-Right now, this only has support for Lua, but a few lines can be uncommented
-to get Golang support.
+### Required
+
+- neovim
+
+### Optional
+
+- fd
+- ripgrep
+- any other tools to install specific mason packages
+
+## Installation
+
+```bash
+git clone https://github.com/peter-bread/minimal.nvim.git --depth=1 ~/.config/nvim
+```
