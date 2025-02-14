@@ -248,6 +248,7 @@ require("lazy").setup({
 
 		{
 			"echasnovski/mini.icons",
+			lazy = true,
 			opts = {},
 			config = function(_, opts)
 				require("mini.icons").setup(opts)
