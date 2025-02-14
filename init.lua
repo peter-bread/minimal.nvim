@@ -245,6 +245,15 @@ require("lazy").setup({
 			event = "InsertEnter",
 			opts = {},
 		},
+
+		{
+			"echasnovski/mini.icons",
+			opts = {},
+			config = function(_, opts)
+				require("mini.icons").setup(opts)
+				MiniIcons.mock_nvim_web_devicons() -- for extra compatibility. See :h MiniIcons.mock_nvim_web_devicons()
+			end,
+		},
 	},
 
 	install = { colorscheme = { "flow", "default" } },
