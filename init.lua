@@ -68,6 +68,8 @@ require("lazy").setup({
 			"nvim-treesitter/nvim-treesitter",
 			build = ":TSUpdate",
 
+			event = { "BufReadPost", "BufWritePost", "BufNewFile", "VeryLazy" },
+
 			opts = {
 				ensure_installed = { "c", "lua", "luadoc", "vim", "vimdoc", "query", "markdown", "markdown_inline" },
 				highlight = { enable = true },
@@ -82,6 +84,8 @@ require("lazy").setup({
 		{
 			"saghen/blink.cmp",
 			dependencies = "rafamadriz/friendly-snippets",
+
+			event = "InsertEnter",
 
 			version = "*",
 
@@ -142,6 +146,7 @@ require("lazy").setup({
 				"williamboman/mason-lspconfig.nvim",
 				"WhoIsSethDaniel/mason-tool-installer.nvim",
 			},
+			event = "VeryLazy",
 			opts = {
 				mason = {},
 				installer = {
@@ -171,6 +176,7 @@ require("lazy").setup({
 				"williamboman/mason.nvim",
 				"williamboman/mason-lspconfig.nvim",
 			},
+			event = { "BufReadPre", "BufNewFile", "VeryLazy" },
 			opts = {
 				servers = {
 					lua_ls = {},
@@ -205,35 +211,28 @@ require("lazy").setup({
 			end,
 		},
 
-		-- fuzzy finder
-		-- alternatives:
-		--    folke/snacks.nvim (snacks.picker)
-		--    ibhagwan/fzf-lua
 		{
-			"nvim-telescope/telescope.nvim",
-			lazy = true,
-			dependencies = {
-				"nvim-lua/plenary.nvim",
-				{
-					"nvim-telescope/telescope-fzf-native.nvim",
-					lazy = true,
-					build = "make",
-					cond = function()
-						return vim.fn.executable("make") == 1
-					end,
-				},
+			"folke/snacks.nvim",
+			lazy = false,
+			priority = 1000,
+
+			---@type snacks.Config
+			---@diagnostic disable-next-line: missing-fields
+			opts = {
+				dashboard = { enabled = true },
+
+				-- fuzzy finder
+				-- alternatives:
+				--    ibhagwan/fzf-lua
+				--    nvim-telescope/telescope.nvim
+				picker = { enabled = true },
 			},
-			cmd = "Telescope",
+
+      -- stylua: ignore
 			keys = {
-				{ "<leader>ff", "<cmd>Telescope find_files<cr>", mode = "n", desc = "Find Files" },
-				{ "<leader>fr", "<cmd>Telescope oldfiles<cr>", mode = "n", desc = "Recent Files" },
+				{ "<leader>ff", function() require("snacks").picker.files() end, mode = "n", desc = "Find Files" },
+				{ "<leader>fr", function() require("snacks").picker.recent() end, mode = "n", desc = "Recent Files" },
 			},
-			opts = {},
-			config = function(_, opts)
-				local telescope = require("telescope")
-				telescope.setup(opts)
-				pcall(telescope.load_extension("fzf"))
-			end,
 		},
 
 		-- autopairs
@@ -266,6 +265,7 @@ local set = vim.keymap.set
 
 set("n", "<leader>l", "<cmd>Lazy<cr>", { desc = "Lazy" })
 set("n", "<leader>m", "<cmd>Mason<cr>", { desc = "Mason" })
+set("n", "<leader>ca", vim.lsp.buf.code_action, { desc = "Code Action" })
 
 -- autocmds
 
